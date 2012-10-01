@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+ZSH=$HOME/Coding/git/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -30,7 +30,7 @@ ZSH_THEME="robbyrussell"
 # DISABLE_CORRECTION="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment following line if you want to disable marking untracked files under
 # VCS as dirty. This makes repository status check for large repositories much,
@@ -40,8 +40,110 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git autojump brew compleat osx rvm history-substring-search zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+DEFAULT_USER="patrick"
+
+# Exports {{{
+export PATH=~/bin:/usr/texbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:~/.rvm/bin:$PATH
+export EDITOR='/Users/patrick/bin/vim'
+export PS4='[--- LINE: $LINENO ---] ' # Make shell debugging easier
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export TERM=xterm-256color
+export CLICOLOR=true
+export LSCOLORS=exfxcxdxbxegedabagacad
+export LC_CTYPE=en_US.UTF-8
+export HISTCONTROL=ignoredups:erasedups
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+export SAVEHIST=10000
+export PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -c; history -r;"
+export MANWIDTH=80
+
+# Colors in man pages via less
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;37m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+export MANPAGER=/usr/bin/less
+
+# by default: export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+# we take out the slash, period, angle brackets, dash here.
+export WORDCHARS='*?_[]~=&;!#$%^(){}'
+# }}}
+
+# Options {{{
+setopt no_case_glob             # set ignore case for ls etc
+setopt completeinword           # more extensive tab completion
+setopt no_extended_history      # don't use the extended history function (bash compatibility)
+setopt incappendhistory         # append every history entry immediately to the history file
+setopt sharehistory
+setopt hist_ignore_dups         # ignore duplicates
+setopt hist_ignore_space        # ignore entries which begin with a space
+setopt auto_cd                  # specifying a directory name suffices to cd into it
+setopt autopushd
+setopt PUSHD_IGNORE_DUPS
+setopt EXTENDED_GLOB
+setopt LIST_PACKED
+setopt alwaystoend              # when complete from middle, move cursor
+setopt correct                  # spelling correction
+setopt NONOMATCH                # has to do with globbing
+setopt RM_STAR_WAIT             # 10 second wait if you do something that will delete everything
+setopt completealiases
+
+REPORTTIME=10                   # report time and if command takes > 10 sec
+HISTFILE=~/.bash_history
+# }}}
+
+# Aliases {{{
+source ~/bin/dotfiles/bash/aliases
+alias so='source ~/.zshrc'
+alias ls=' ls'
+alias cd=' cd'
+# }}}
+
+# Global aliases {{{
+
+alias -g G="| grep"
+alias -g L="| less"
+alias -g NUL="> /dev/null 2>&1"
+
+#}}}
+
+# Search the complete history {{{
+h() {
+  fc -l 0 -1 | sed -n "/$1/s/^ */!/p" | tail -n ${2:-100}
+}
+alias h=' h'
+# }}}
+
+# Pressing enter with no command given runs ls {{{
+# http://www.reddit.com/r/zsh/comments/s6t6d/is_there_an_alias_for_an_empty_line/
+function empty-buffer-to-ls() {
+    if [[ $#BUFFER == 0 ]]; then
+        BUFFER="ls" 
+    fi
+}
+zle -N zle-line-finish empty-buffer-to-ls
+# }}}
+
+# Shortcut and completion to ~/Fast-Access {{{
+fa() {
+    cd ~/Fast-Access/$1;
+}
+
+_fa() {
+    _files -W ~/Fast-Access -/;
+}
+compdef _fa fa
+# }}}
