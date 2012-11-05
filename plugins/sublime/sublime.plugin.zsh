@@ -12,11 +12,10 @@ _sublime_darwin_paths=(
 
 if [[ $('uname') == 'Linux' ]]; then
 	if [ -f '/usr/bin/sublime_text' ]; then
-		st_run() { nohup /usr/bin/sublime_text $@ > /dev/null & }
+		alias st='/usr/bin/sublime_text&'
 	else
-		st_run() { nohup /usr/bin/sublime-text $@ > /dev/null & }
+		alias st='/usr/bin/sublime-text&'
 	fi
-alias st=st_run
 elif  [[ $('uname') == 'Darwin' ]]; then
 	# Check if Sublime is installed in user's home application directory
 	if [[ -a $HOME/${_sublime_darwin_subl} ]]; then
