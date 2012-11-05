@@ -1,4 +1,5 @@
 # Sublime Text 2 Aliases
+#unamestr = 'uname'
 
 local _sublime_darwin_paths > /dev/null 2>&1
 _sublime_darwin_paths=(
@@ -11,21 +12,16 @@ _sublime_darwin_paths=(
 
 if [[ $('uname') == 'Linux' ]]; then
 	if [ -f '/usr/bin/sublime_text' ]; then
-		st_run() { nohup /usr/bin/sublime_text $@ > /dev/null & }
+		alias st='/usr/bin/sublime_text&'
 	else
-		st_run() { nohup /usr/bin/sublime-text $@ > /dev/null & }
+		alias st='/usr/bin/sublime-text&'
 	fi
-	alias st=st_run
-
 elif  [[ $('uname') == 'Darwin' ]]; then
-
-	for _sublime_path in $_sublime_darwin_paths; do
-		if [[ -a $_sublime_path ]]; then
-			alias subl="'$_sublime_path'"
-			alias st=subl
-			break
-		fi
-	done
+	# Check if Sublime is installed in user's home application directory
+	if [[ -a $HOME/${_sublime_darwin_subl} ]]; then
+		alias st='$HOME/${_sublime_darwin_subl}'
+	else
+		alias st='${_sublime_darwin_subl}'
+	fi
 fi
-
 alias stt='st .'
