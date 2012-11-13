@@ -83,6 +83,8 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}'
 # }}}
 
 # Options {{{
+bindkey -v
+
 setopt no_case_glob             # set ignore case for ls etc
 setopt completeinword           # more extensive tab completion
 setopt no_extended_history      # don't use the extended history function (bash compatibility)
@@ -147,3 +149,23 @@ _fa() {
 }
 compdef _fa fa
 # }}}
+
+# transcode a video to 360p H.264 500kbps
+#   transcode INPUT OUTPUT
+# INPUT = file name
+# OUTPUT = new file name without extension (.mp4 is appended automatically) 
+function transcode() {
+    FILE=$1
+    OUTPUT=$2
+
+    /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=-1:360 -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
+}
+
+function transcode-size() {
+    FILE=$1
+    OUTPUT=$2
+    SIZE=$3
+
+    /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=${SIZE} -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
+}
+
