@@ -124,6 +124,16 @@ prompt_input() {
   echo -n " "
 }
 
+# If I am using vi keys, I want to know what mode I'm currently using.
+# zle-keymap-select is executed every time KEYMAP changes.
+# From http://zshwiki.org/home/examples/zlewidgets
+function zle-keymap-select {
+    VIMODE="${${KEYMAP/vicmd/ -- NORMAL --}/(main|viins)/ -- INSERT --}"
+    zle reset-prompt
+}
+
+zle -N zle-keymap-select
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -137,6 +147,7 @@ build_prompt() {
   prompt_end
   echo -n "\n"
   prompt_input
+  echo -n ${VIMODE}
   prompt_end
 }
 
