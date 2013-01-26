@@ -88,23 +88,25 @@ export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes
 # Options {{{
 bindkey -v
 
-setopt no_case_glob             # set ignore case for ls etc
-setopt completeinword           # more extensive tab completion
-setopt no_extended_history      # don't use the extended history function (bash compatibility)
-setopt incappendhistory         # append every history entry immediately to the history file
-setopt sharehistory
-setopt hist_ignore_dups         # ignore duplicates
-setopt hist_ignore_space        # ignore entries which begin with a space
-setopt auto_cd                  # specifying a directory name suffices to cd into it
-setopt autopushd
+setopt NO_CASE_GLOB             # set ignore case for ls etc
+setopt COMPLETEINWORD           # more extensive tab completion
+setopt NO_EXTENDED_HISTORY      # don't use the extended history function (bash compatibility)
+setopt INCAPPENDHISTORY         # append every history entry immediately to the history file
+setopt SHAREHISTORY
+setopt HIST_IGNORE_DUPS         # ignore duplicates
+setopt HIST_IGNORE_SPACE        # ignore entries which begin with a space
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt AUTO_CD                  # specifying a directory name suffices to cd into it
+setopt AUTOPUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt EXTENDED_GLOB
 setopt LIST_PACKED
-setopt alwaystoend              # when complete from middle, move cursor
-setopt correct                  # spelling correction
+setopt ALWAYSTOEND              # when complete from middle, move cursor
+setopt CORRECT                  # spelling correction
 setopt NONOMATCH                # has to do with globbing
 setopt RM_STAR_WAIT             # 10 second wait if you do something that will delete everything
-setopt completealiases
+setopt COMPLETEALIASES
 
 REPORTTIME=10                   # report time and if command takes > 10 sec
 HISTFILE=~/.bash_history
