@@ -80,6 +80,9 @@ export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu
 # by default: export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
 # we take out the slash, period, angle brackets, dash here.
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
+
+# Make auto correction a little bit nicer
+export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
 # }}}
 
 # Options {{{
