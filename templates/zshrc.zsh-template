@@ -168,6 +168,17 @@ _fa() {
 compdef _fa fa
 # }}}
 
+# Marked Completion {{{
+
+_marked() {
+    _files;
+}
+compdef _marked mark
+
+# }}}
+
+# Transcode {{{
+
 # transcode a video to 360p H.264 500kbps
 #   transcode INPUT OUTPUT
 # INPUT = file name
