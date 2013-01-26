@@ -209,3 +209,4 @@ function transcode-size() {
     /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=${SIZE} -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
 }
 
+# }}}
