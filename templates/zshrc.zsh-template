@@ -126,8 +126,14 @@ bindkey -M viins "^E" end-of-line        # Ctrl-E
 bindkey -M viins '^r' history-incremental-pattern-search-backward
 bindkey -M vicmd '^r' history-incremental-pattern-search-backward
 
-bindkey '\e[A' history-search-backward
-bindkey '\e[B' history-search-forward
+bindkey -M viins '^s' history-incremental-pattern-search-forward
+bindkey -M vicmd '^s' history-incremental-pattern-search-forward
+
+# bindkey -M vicmd '\e[A' history-incremental-pattern-search-backward
+# bindkey -M vicmd '\e[B' history-incremental-pattern-search-forward
+# bindkey -M viins '\e[A' history-incremental-pattern-search-backward
+# bindkey -M viins '\e[B' history-incremental-pattern-search-forward
+
 # }}}
 
 # Aliases {{{
