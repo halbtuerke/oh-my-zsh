@@ -40,13 +40,14 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git autojump brew compleat osx rvm zsh-history-substring-search zsh-syntax-highlighting)
+plugins=(git autojump brew compleat osx rvm tmuxinator zsh-history-substring-search zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
 fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 DEFAULT_USER="patrick"
 
@@ -83,10 +84,54 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}'
 
 # Make auto correction a little bit nicer
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
+
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+
+
 # }}}
 
 # Options {{{
+
+
+
 bindkey -v
+
+zle_use_ctrl_d='yes'            # use ctrl-d to switch from insert to cmd mode as this does not
+                                # require a timeout
+if [[ ${zle_use_ctrl_d} == 'yes' ]]; then
+    setopt ignore_eof
+    bindkey -M viins '^D' ft-vi-cmd
+    bindkey -M vicmd '^D' ft-vi-cmd-cmd
+    bindkey -r '^['
+fi
+# Since I want to bind `vi-cmd-mode' to Ctrl-D (which is what I'm doing in
+# vim and emacs-viper, too) I need to wrap this widget into a user-widget,
+# because only those have an effect with empty command buffers and bindings
+# to the key, which sends `EOF'. This also needs the ignore_eof option set.
+function ft-vi-cmd() {
+    #ft_zle_state[overwrite]=no
+    zle vi-cmd-mode
+}
+zle -N ft-vi-cmd
+
+function ft-vi-cmd-cmd() {
+    zle -M 'Use `:q<RET>'\'' to exit the shell.'
+}
+
+zle -N ft-vi-cmd-cmd
+
+# This setup may change the `ESC' keybinding to `C-d'. That defeats the
+# possibility to exit zsh by pressing `C-d' (which usually sends EOF).
+# With this widget, you can type `:q<RET>' to exit the shell from vicmd.
+function ft-zshexit {
+    [[ -o hist_ignore_space ]] && BUFFER=' '
+    BUFFER="${BUFFER}exit"
+    zle .accept-line
+}
+zle -N ft-zshexit
+
+
 
 setopt NO_CASE_GLOB             # set ignore case for ls etc
 setopt COMPLETEINWORD           # more extensive tab completion
@@ -209,4 +254,14 @@ function transcode-size() {
     /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=${SIZE} -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
 }
 
+function rmsub() {
+    SUB=$1
+    cd ${SUB} && git remote -v && cd ../.. && git rm -r ${SUB}
+}
+
+function addsub() {
+    URL=$1
+    SUB=$2
+    git submodule add ${URL} ${SUB} && cd ${SUB} && git reset --hard && cd ../.. && git commit
+}
 # }}}
