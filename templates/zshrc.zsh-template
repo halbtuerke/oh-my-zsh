@@ -270,3 +270,5 @@ function addsub() {
     git submodule add ${URL} ${SUB} && cd ${SUB} && git reset --hard && cd ../.. && git commit
 }
 # }}}
+
+compctl -g '~/.teamocil/*(:t:r)' teamocil
