@@ -52,7 +52,7 @@ fpath=(/usr/local/share/zsh/site-functions $fpath)
 DEFAULT_USER="patrick"
 
 # Exports {{{
-export PATH=~/bin:/usr/texbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:~/.rvm/bin:$PATH
+export PATH=/usr/local/share/npm/bin:~/bin:/usr/texbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:~/.rvm/bin:$PATH
 export EDITOR='/Users/patrick/bin/vim'
 export PS4='[--- LINE: $LINENO ---] ' # Make shell debugging easier
 export LC_ALL=en_US.UTF-8
