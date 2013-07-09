@@ -81,10 +81,6 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}'
 # Make auto correction a little bit nicer
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
 
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-
-
-
 # }}}
 
 # Options {{{
