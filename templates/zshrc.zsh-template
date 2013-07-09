@@ -163,6 +163,7 @@ bindkey -M vicmd v edit-command-line
 
 bindkey -M viins "^A" beginning-of-line  # Ctrl-A
 bindkey -M viins "^E" end-of-line        # Ctrl-E
+bindkey -M viins "^K" kill-line
 
 bindkey -M viins '^r' history-incremental-pattern-search-backward
 bindkey -M vicmd '^r' history-incremental-pattern-search-backward
