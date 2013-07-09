@@ -209,7 +209,7 @@ alias h=' h'
 # http://www.reddit.com/r/zsh/comments/s6t6d/is_there_an_alias_for_an_empty_line/
 function empty-buffer-to-ls() {
     if [[ $#BUFFER == 0 ]]; then
-        BUFFER="ls" 
+        BUFFER="ls"
     fi
 }
 zle -N zle-line-finish empty-buffer-to-ls
