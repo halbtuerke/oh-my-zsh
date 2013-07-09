@@ -215,6 +215,13 @@ function empty-buffer-to-ls() {
 zle -N zle-line-finish empty-buffer-to-ls
 # }}}
 
+# Automatically run ls after cd {{{
+function chpwd() {
+    emulate -L zsh
+    ls
+}
+# }}}
+
 # Shortcut and completion to ~/Fast-Access {{{
 fa() {
     cd ~/Fast-Access/$1;
