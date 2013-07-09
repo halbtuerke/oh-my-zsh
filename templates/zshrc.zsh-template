@@ -276,3 +276,6 @@ function addsub() {
 # }}}
 
 compctl -g '~/.teamocil/*(:t:r)' teamocil
+
+# Autocomplete for 'g' as well
+compdef g=git
