@@ -143,7 +143,6 @@ setopt ALWAYSTOEND              # when complete from middle, move cursor
 setopt CORRECT                  # spelling correction
 setopt NONOMATCH                # has to do with globbing
 setopt RM_STAR_WAIT             # 10 second wait if you do something that will delete everything
-setopt COMPLETEALIASES
 
 REPORTTIME=10                   # report time and if command takes > 10 sec
 HISTFILE=~/.bash_history
@@ -273,5 +272,3 @@ function addsub() {
 
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
-# Autocomplete for 'g' as well
-compdef g=git
