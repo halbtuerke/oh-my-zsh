@@ -42,89 +42,97 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+autoload bashcompinit
+bashcompinit
+
 fpath=(/usr/local/share/zsh-completions $fpath)
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-
+# 
 DEFAULT_USER="patrick"
-
-# Exports {{{
-export PATH=/usr/local/share/npm/bin:~/bin:/usr/texbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:~/.rvm/bin:$PATH
-export EDITOR='/Users/patrick/bin/vim'
-export PS4='[--- LINE: $LINENO ---] ' # Make shell debugging easier
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export TERM=xterm-256color
+# 
+# # Exports {{{
+export PATH=~/.wp-cli/bin:/usr/local/share/npm/bin:~/bin:/usr/texbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:~/.rvm/bin:$PATH
+export WP_CLI_PHP=/Applications/MAMP/bin/php/php5.3.20/bin/php
+# export EDITOR='/Users/patrick/bin/vim'
+export EDITOR='emacsclient'
+# export PS4='[--- LINE: $LINENO ---] ' # Make shell debugging easier
+# export LC_ALL=en_US.UTF-8
+# export LANG=en_US.UTF-8
+# export TERM=xterm-256color
 export CLICOLOR=true
 export LSCOLORS=exfxcxdxbxegedabagacad
-export LC_CTYPE=en_US.UTF-8
-export HISTCONTROL=ignoredups:erasedups
+# export LC_CTYPE=en_US.UTF-8
+# export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 export SAVEHIST=10000
-export PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -c; history -r;"
+# # export PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -c; history -r;"
+# export PROMPT_COMMAND=""
 export MANWIDTH=80
+export HOMEBREWW_KEEP_INFO=1
 
-# Colors in man pages via less
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;37m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
-export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
-
-# by default: export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
-# we take out the slash, period, angle brackets, dash here.
-export WORDCHARS='*?_[]~=&;!#$%^(){}'
-
+# 
+# # Colors in man pages via less
+# export LESS_TERMCAP_mb=$'\E[01;31m'
+# export LESS_TERMCAP_md=$'\E[01;37m'
+# export LESS_TERMCAP_me=$'\E[0m'
+# export LESS_TERMCAP_se=$'\E[0m'
+# export LESS_TERMCAP_so=$'\E[01;44;33m'
+# export LESS_TERMCAP_ue=$'\E[0m'
+# export LESS_TERMCAP_us=$'\E[01;32m'
+# export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+# 
+# # by default: export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+# # we take out the slash, period, angle brackets, dash here.
+# export WORDCHARS='*?_[]~=&;!#$%^(){}'
+# 
 # Make auto correction a little bit nicer
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
-
-# }}}
-
-# Options {{{
-
-
-
-bindkey -v
-
-zle_use_ctrl_d='yes'            # use ctrl-d to switch from insert to cmd mode as this does not
-                                # require a timeout
-if [[ ${zle_use_ctrl_d} == 'yes' ]]; then
-    setopt ignore_eof
-    bindkey -M viins '^D' ft-vi-cmd
-    bindkey -M vicmd '^D' ft-vi-cmd-cmd
-    bindkey -r '^['
-fi
-# Since I want to bind `vi-cmd-mode' to Ctrl-D (which is what I'm doing in
-# vim and emacs-viper, too) I need to wrap this widget into a user-widget,
-# because only those have an effect with empty command buffers and bindings
-# to the key, which sends `EOF'. This also needs the ignore_eof option set.
-function ft-vi-cmd() {
-    #ft_zle_state[overwrite]=no
-    zle vi-cmd-mode
-}
-zle -N ft-vi-cmd
-
-function ft-vi-cmd-cmd() {
-    zle -M 'Use `:q<RET>'\'' to exit the shell.'
-}
-
-zle -N ft-vi-cmd-cmd
-
-# This setup may change the `ESC' keybinding to `C-d'. That defeats the
-# possibility to exit zsh by pressing `C-d' (which usually sends EOF).
-# With this widget, you can type `:q<RET>' to exit the shell from vicmd.
-function ft-zshexit {
-    [[ -o hist_ignore_space ]] && BUFFER=' '
-    BUFFER="${BUFFER}exit"
-    zle .accept-line
-}
-zle -N ft-zshexit
-
-
-
+# 
+# # }}}
+# 
+# # Options {{{
+# 
+# 
+# 
+# bindkey -v
+# 
+# zle_use_ctrl_d='yes'            # use ctrl-d to switch from insert to cmd mode as this does not
+#                                 # require a timeout
+# if [[ ${zle_use_ctrl_d} == 'yes' ]]; then
+#     setopt ignore_eof
+#     bindkey -M viins '^D' ft-vi-cmd
+#     bindkey -M vicmd '^D' ft-vi-cmd-cmd
+#     bindkey -r '^['
+# fi
+# # Since I want to bind `vi-cmd-mode' to Ctrl-D (which is what I'm doing in
+# # vim and emacs-viper, too) I need to wrap this widget into a user-widget,
+# # because only those have an effect with empty command buffers and bindings
+# # to the key, which sends `EOF'. This also needs the ignore_eof option set.
+# function ft-vi-cmd() {
+#     #ft_zle_state[overwrite]=no
+#     zle vi-cmd-mode
+# }
+# zle -N ft-vi-cmd
+# 
+# function ft-vi-cmd-cmd() {
+#     zle -M 'Use `:q<RET>'\'' to exit the shell.'
+# }
+# 
+# zle -N ft-vi-cmd-cmd
+# 
+# # This setup may change the `ESC' keybinding to `C-d'. That defeats the
+# # possibility to exit zsh by pressing `C-d' (which usually sends EOF).
+# # With this widget, you can type `:q<RET>' to exit the shell from vicmd.
+# function ft-zshexit {
+#     [[ -o hist_ignore_space ]] && BUFFER=' '
+#     BUFFER="${BUFFER}exit"
+#     zle .accept-line
+# }
+# zle -N ft-zshexit
+# 
+# 
+# 
 setopt NO_CASE_GLOB             # set ignore case for ls etc
 setopt COMPLETEINWORD           # more extensive tab completion
 setopt NO_EXTENDED_HISTORY      # don't use the extended history function (bash compatibility)
@@ -146,45 +154,45 @@ setopt RM_STAR_WAIT             # 10 second wait if you do something that will d
 
 REPORTTIME=10                   # report time and if command takes > 10 sec
 HISTFILE=~/.bash_history
-
+# 
 # When offering typo corrections, do not propose anything which starts with an
 # underscore (such as many of Zsh's shell functions).
 CORRECT_IGNORE='_*'
-
-# Bind 'v' in Normal mode to edit the current line
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-
-bindkey -M viins "^A" beginning-of-line  # Ctrl-A
-bindkey -M viins "^E" end-of-line        # Ctrl-E
-bindkey -M viins "^K" kill-line
-
-bindkey -M viins '^r' history-incremental-pattern-search-backward
-bindkey -M vicmd '^r' history-incremental-pattern-search-backward
-
-bindkey -M viins '^s' history-incremental-pattern-search-forward
-bindkey -M vicmd '^s' history-incremental-pattern-search-forward
-
-# }}}
-
-# Aliases {{{
+# 
+# # Bind 'v' in Normal mode to edit the current line
+# autoload -U edit-command-line
+# zle -N edit-command-line
+# bindkey -M vicmd v edit-command-line
+# 
+# bindkey -M viins "^A" beginning-of-line  # Ctrl-A
+# bindkey -M viins "^E" end-of-line        # Ctrl-E
+# bindkey -M viins "^K" kill-line
+# 
+# bindkey -M viins '^r' history-incremental-pattern-search-backward
+# bindkey -M vicmd '^r' history-incremental-pattern-search-backward
+# 
+# bindkey -M viins '^s' history-incremental-pattern-search-forward
+# bindkey -M vicmd '^s' history-incremental-pattern-search-forward
+# 
+# # }}}
+# 
+# # Aliases {{{
 source ~/bin/dotfiles/bash/aliases
 alias so='source ~/.zshrc'
 alias ls=' ls'
 alias cd=' cd'
-# }}}
-
-# Global aliases {{{
-
+# # }}}
+# 
+# # Global aliases {{{
+# 
 alias -g G="| grep"
 alias -g L="| less"
 alias -g NUL="> /dev/null 2>&1"
 alias -g C="| pbcopy"
-alias -G CNT="| wc -l"
-
-#}}}
-
+alias -g CNT="| wc -l"
+# 
+# #}}}
+# 
 # Search the complete history {{{
 h() {
   if [ -z "$1" ]
@@ -196,7 +204,7 @@ h() {
 }
 alias h=' h'
 # }}}
-
+# 
 # Pressing enter with no command given runs ls {{{
 # http://www.reddit.com/r/zsh/comments/s6t6d/is_there_an_alias_for_an_empty_line/
 function empty-buffer-to-ls() {
@@ -206,83 +214,131 @@ function empty-buffer-to-ls() {
 }
 zle -N zle-line-finish empty-buffer-to-ls
 # }}}
-
+# 
 # Automatically run ls after cd {{{
 function chpwd() {
     emulate -L zsh
     ls
 }
 # }}}
-
-# Shortcut and completion to ~/Fast-Access {{{
-fa() {
-    cd ~/Fast-Access/$1;
-}
-
-_fa() {
-    _files -W ~/Fast-Access -/;
-}
-compdef _fa fa
-# }}}
-
+# 
+# # Shortcut and completion to ~/Fast-Access {{{
+# fa() {
+#     cd ~/Fast-Access/$1;
+# }
+# 
+# _fa() {
+#     _files -W ~/Fast-Access -/;
+# }
+# compdef _fa fa
+# # }}}
+# 
 # Marked Completion {{{
 
 _marked() {
     _files;
 }
 compdef _marked mark
-
-# }}}
-
-# Transcode {{{
-
-# transcode a video to 360p H.264 500kbps
-#   transcode INPUT OUTPUT
-# INPUT = file name
-# OUTPUT = new file name without extension (.mp4 is appended automatically) 
-function transcode() {
-    FILE=$1
-    OUTPUT=$2
-
-    /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=-1:360 -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
-}
-
-function transcode-size() {
-    FILE=$1
-    OUTPUT=$2
-    SIZE=$3
-
-    /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=${SIZE} -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
-}
-
-function rmsub() {
-    SUB=$1
-    cd ${SUB} && git remote -v && cd ../.. && git rm -r ${SUB}
-}
-
-function addsub() {
-    URL=$1
-    SUB=$2
-    git submodule add ${URL} ${SUB} && cd ${SUB} && git reset --hard && cd ../.. && git commit
-}
-# }}}
-
-compctl -g '~/.teamocil/*(:t:r)' teamocil
-
-# Search Google {{{
-
-function google {
-    Q="$@";
-    GOOG_URL='https://www.google.de/search?tbs=li:1&q=';
-    AGENT="Mozilla/4.0";
-    stream=$(curl -A "$AGENT" -skLm 10 "${GOOG_URL}${Q//\ /+}" | grep -oP '\/url\?q=.+?&amp' | sed 's|/url?q=||; s|&amp||');
-    echo -e "${stream//\%/\x}";
-}
-
+# 
+# # }}}
+# 
+# # Transcode {{{
+# 
+# # transcode a video to 360p H.264 500kbps
+# #   transcode INPUT OUTPUT
+# # INPUT = file name
+# # OUTPUT = new file name without extension (.mp4 is appended automatically) 
+# function transcode() {
+#     FILE=$1
+#     OUTPUT=$2
+# 
+#     /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=-1:360 -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
+# }
+# 
+# function transcode-size() {
+#     FILE=$1
+#     OUTPUT=$2
+#     SIZE=$3
+# 
+#     /usr/local/bin/ffmpeg -i ${FILE} -vcodec libx264 -vprofile high -preset veryfast -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=${SIZE} -threads 0 -acodec libvo_aacenc -b:a 128k ${OUTPUT}.mp4
+# }
+# 
+# function rmsub() {
+#     SUB=$1
+#     cd ${SUB} && git remote -v && cd ../.. && git rm -r ${SUB}
+# }
+# 
+# function addsub() {
+#     URL=$1
+#     SUB=$2
+#     git submodule add ${URL} ${SUB} && cd ${SUB} && git reset --hard && cd ../.. && git commit
+# }
+# # }}}
+# 
+# compctl -g '~/.teamocil/*(:t:r)' teamocil
+# 
+# # Search Google {{{
+# 
+# function google {
+#     Q="$@";
+#     GOOG_URL='https://www.google.de/search?tbs=li:1&q=';
+#     AGENT="Mozilla/4.0";
+#     stream=$(curl -A "$AGENT" -skLm 10 "${GOOG_URL}${Q//\ /+}" | grep -oP '\/url\?q=.+?&amp' | sed 's|/url?q=||; s|&amp||');
+#     echo -e "${stream//\%/\x}";
+# }
+# 
 function goo {
     Q="$@";
     GOO_URL='https://www.google.com/search?q=';
     open "${GOO_URL}${Q//\ /+}"
 }
+# 
+# # }}}
+# 
+# # alias last and save {{{
+# # use `als c NAME` to chop off the last argument (for filenames/patterns)
+# # http://brettterpstra.com/2013/08/30/easily-save-that-wicked-awesome-shell-command/
+# als() {
+#     local aliasfile chop x
+#     [[ $# == 0 ]] && echo "Name your alias" && return
+#     if [[ $1 == "c" ]]; then
+#         chop=true
+#         shift
+#     fi
+#     aliasfile=~/bin/dotfiles/bash/aliases
+#     touch $aliasfile
+#     if [[ `cat "$aliasfile" |grep "alias ${1// /}="` != "" ]]; then
+#         echo "Alias ${1// /} already exists"
+#     else
+#         x=`fc -l -2 | sed -e '$!{h;d;}' -e x | sed -e 's/.\{7\}//'`
+#         if [[ $chop == true ]]; then
+#             echo "Chopping..."
+#             x=$(echo $x | rev | cut -d " " -f2- | rev)
+#         fi
+#         echo -e "\nalias ${1// /}=\"`echo $x|sed -e 's/ *$//'|sed -e 's/\"/\\\\"/g'`\"" >> $aliasfile && source $aliasfile
+#         alias $1
+#     fi
+# }
+# 
+# # }}}
+# 
 
-# }}}
+explain() {
+  # base url with first command already injected
+  # $ explain tar
+  #   => http://explainshel.com/explain/tar?args=
+  url="http://explainshell.com/explain/$1?args="
+
+  # removes $1 (tar) from arguments ($@)
+  shift;
+
+  # iterates over remaining args and adds builds the rest of the url
+  for i in "$@"; do
+    url=$url"$i""+"
+  done
+
+  # opens url in browser
+  open "$url"
+}
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
