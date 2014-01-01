@@ -243,6 +243,15 @@ _fa() {
 compdef _fa fa
 # }}}
 
+gre() {
+    cd ~/Coding/git/$1;
+}
+
+_gre() {
+    _files -W ~/Coding/git/ -/;
+}
+compdef _gre gre
+
 # Marked Completion {{{
 
 _marked() {
