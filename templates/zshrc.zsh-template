@@ -54,6 +54,7 @@ DEFAULT_USER="patrick"
  
 # Exports {{{
 export PATH=~/.wp-cli/bin:/usr/local/share/npm/bin:~/bin:/usr/texbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:~/.rvm/bin:$PATH
+export PATH="$(brew --prefix josegonzalez/php/php55)/bin:$PATH"
 export WP_CLI_PHP=/Applications/MAMP/bin/php/php5.3.20/bin/php
 # export EDITOR='/Users/patrick/bin/vim'
 export EDITOR='et'
